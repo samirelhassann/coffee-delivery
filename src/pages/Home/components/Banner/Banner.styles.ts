@@ -7,12 +7,14 @@ export const Container = styled.div`
 
   background-image: url(${BannerBackground});
   background-size: cover;
-`;
 
-export const BannerDetails = styled.div`
-  padding: 5.875rem 10rem;
-  display: flex;
-  justify-content: space-evenly;
+  section {
+    padding-top: 5.875rem;
+    padding-bottom: 5.875rem;
+
+    display: flex;
+    justify-content: space-evenly;
+  }
 `;
 
 export const DetailsContainer = styled.div`

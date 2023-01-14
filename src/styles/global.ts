@@ -11,6 +11,11 @@ export const GlobalStyle = createGlobalStyle`
         outline: 0;
     }
 
+    section{
+        padding-left:  10rem;
+        padding-right:  10rem;
+    }
+
     body{
         background: ${(props) => props.theme.background};
     }

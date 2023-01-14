@@ -13,7 +13,7 @@ const Header = () => {
       <img src={logo} alt="" />
       <ButtonsArea>
         <LocationBox title="Porto Alegre, RS" />
-        <CartBox />
+        <CartBox isHeader />
       </ButtonsArea>
     </Container>
   );
