@@ -16,7 +16,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     header{
-        font-family: "Baloo", sans-serif;
+        font-family: "Baloo 2", sans-serif;
         font-weight: 700;
         font-size: 1rem;
     }
