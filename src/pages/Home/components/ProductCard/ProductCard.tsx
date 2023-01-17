@@ -10,6 +10,7 @@ import {
 } from "./ProductCard.styles";
 
 import CartBox from "../../../../components/CartBox/CartBox";
+import ProductCartBox from "../../../../components/ProductCartBox/ProductCartBox";
 import QuantityControl from "../../../../components/QuantityControl/QuantityControl";
 import Tag from "../../../../components/Tag/Tag";
 
@@ -51,7 +52,7 @@ const ProductCard = ({
 
         <ButtonsArea>
           <QuantityControl />
-          <CartBox />
+          <ProductCartBox />
         </ButtonsArea>
       </PriceAndButtonsArea>
     </Container>

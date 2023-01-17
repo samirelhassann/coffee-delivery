@@ -16,6 +16,7 @@ export const Container = styled.div`
 
 export const CoffeeList = styled.div`
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 1.875rem 2rem;
 `;

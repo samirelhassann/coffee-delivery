@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { ButtonsArea, Container } from "./Header.styles";
 
@@ -10,10 +11,14 @@ import LocationBox from "../LocationBox/LocationBox";
 const Header = () => {
   return (
     <Container>
-      <img src={logo} alt="" />
+      <Link to="/">
+        <img src={logo} alt="" />
+      </Link>
       <ButtonsArea>
         <LocationBox title="Porto Alegre, RS" />
-        <CartBox isHeader />
+        <Link to="/checkout">
+          <CartBox />
+        </Link>
       </ButtonsArea>
     </Container>
   );
