@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   background-color: ${(props) => props.theme["base-button"]};
   border-radius: 6px;
+  width: fit-content;
 
   display: flex;
   justify-content: center;
