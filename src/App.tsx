@@ -7,13 +7,17 @@ import { ThemeProvider } from "styled-components";
 
 import Router from "./components/Router";
 
+import CheckoutContextProvider from "./contexts/CheckoutContext";
+
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
 
       <BrowserRouter>
-        <Router />
+        <CheckoutContextProvider>
+          <Router />
+        </CheckoutContextProvider>
       </BrowserRouter>
     </ThemeProvider>
   );

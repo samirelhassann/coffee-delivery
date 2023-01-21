@@ -4,9 +4,17 @@ import { ShoppingCartSimple } from "phosphor-react";
 
 import { Container } from "./ProductCartBox.styles";
 
-const ProductCartBox = () => {
+interface ProductCartBoxProps {
+  onAddProduct: () => void;
+}
+
+const ProductCartBox = ({ onAddProduct }: ProductCartBoxProps) => {
+  const handleAddProduct = () => {
+    onAddProduct();
+  };
+
   return (
-    <Container>
+    <Container onClick={handleAddProduct}>
       <ShoppingCartSimple size={22} color="#FFF" weight={"fill"} />
     </Container>
   );
