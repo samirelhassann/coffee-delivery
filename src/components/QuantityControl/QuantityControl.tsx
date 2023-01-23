@@ -1,17 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Minus, Plus } from "phosphor-react";
 
 import { Container } from "./QuantityControl.styles";
 
-const QuantityControl = () => {
-  const [quantity, setQuantity] = useState(1);
+interface QuantityControlProps {
+  quantity: number;
+  onIncrement: () => void;
+  onDecrement: () => void;
+}
+
+const QuantityControl = ({
+  quantity,
+  onIncrement,
+  onDecrement,
+}: QuantityControlProps) => {
+  const handleIncrement = () => {
+    onIncrement();
+  };
+
+  const handleDecrement = () => {
+    onDecrement();
+  };
 
   return (
     <Container>
-      <Minus size={14} color="#8047F8" />
+      <button>
+        <Minus size={14} color="#8047F8" onClick={handleDecrement} />
+      </button>
       <span>{quantity}</span>
-      <Plus size={14} color="#8047F8" />
+      <button>
+        <Plus size={14} color="#8047F8" onClick={handleIncrement} />
+      </button>
     </Container>
   );
 };

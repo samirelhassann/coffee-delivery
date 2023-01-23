@@ -101,16 +101,22 @@ export const TotalAmountContainer = styled.div`
   }
 `;
 
-export const ConfirmButton = styled.button`
+interface ConfirmButtonProps {
+  isDisabled?: boolean;
+}
+
+export const ConfirmButton = styled.button<ConfirmButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 12px 8px;
 
   border: none;
-  background-color: ${(props) => props.theme.yellow};
+  background-color: ${(props) =>
+    props.isDisabled ? props.theme["base-hover"] : props.theme.yellow};
   border-radius: 6px;
-  cursor: pointer;
+  
+  cursor: ${(props) => (props.isDisabled ? "not-allowed" : "pointer")};
 
   color: ${(props) => props.theme.white};
   text-transform: uppercase;
@@ -120,7 +126,8 @@ export const ConfirmButton = styled.button`
   font-stretch: 100;
 
   &:hover {
-    background-color: ${(props) => props.theme["yellow-dark"]};
+    background-color: ${(props) =>
+    !props.isDisabled && props.theme["yellow-dark"]};
     transition: all ease 0.5s;
   }
 `;

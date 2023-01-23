@@ -1,6 +1,9 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
 import { GlobalStyle } from "./styles/global";
 import { defaultTheme } from "./styles/themes/default";
 import { ThemeProvider } from "styled-components";
@@ -16,6 +19,7 @@ function App() {
 
       <BrowserRouter>
         <CheckoutContextProvider>
+          <ToastContainer />
           <Router />
         </CheckoutContextProvider>
       </BrowserRouter>

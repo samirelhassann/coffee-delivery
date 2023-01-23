@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { toast } from "react-toastify";
 
 import {
   ButtonsArea,
@@ -23,8 +24,24 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addProductToCart } = useContext(CheckoutContext);
 
+  const [quantity, setQuantity] = useState(1);
+
   const addProduct = () => {
-    addProductToCart(product);
+    addProductToCart(product, quantity);
+    setQuantity(1);
+
+    toast.success(`${product.title} added to the cart`, {
+      autoClose: 1500,
+      hideProgressBar: true
+    });
+  };
+
+  const handleIncrement = () => {
+    setQuantity((state) => state + 1);
+  };
+
+  const handleDecrement = () => {
+    if (quantity >= 2) setQuantity((state) => state - 1);
   };
 
   return (
@@ -49,7 +66,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </PriceArea>
 
         <ButtonsArea>
-          <QuantityControl />
+          <QuantityControl
+            quantity={quantity}
+            onIncrement={handleIncrement}
+            onDecrement={handleDecrement}
+          />
           <ProductCartBox onAddProduct={addProduct} />
         </ButtonsArea>
       </PriceAndButtonsArea>

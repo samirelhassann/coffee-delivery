@@ -2,7 +2,12 @@ import React, { createContext, ReactNode, useReducer } from "react";
 
 import { Address } from "../domains/Address";
 import { Product } from "../domains/Product";
-import { addNewProductAction } from "../reducers/cart/action";
+import {
+  addNewProductAction,
+  decrementProductQuantityAction,
+  incrementProductQuantityAction,
+  removeProductAction,
+} from "../reducers/cart/action";
 import { cartReducer, ProductByQuantity } from "../reducers/cart/reducer";
 
 interface CheckoutContextType {
@@ -10,7 +15,14 @@ interface CheckoutContextType {
   currentAddress: Address | null;
   totalItems: number;
 
-  addProductToCart: (product: Product) => void;
+  productsTotalAmount: number;
+  deliveryTotalAmount: number;
+  totalAmount: number;
+
+  addProductToCart: (product: Product, quantity: number) => void;
+  removeProductFromCart: (productId: string) => void;
+  incrementCartProductQuantity: (productId: string, quantity: number) => void;
+  decrementCartProductQuantity: (productId: string, quantity: number) => void;
 }
 
 export const CheckoutContext = createContext({} as CheckoutContextType);
@@ -30,8 +42,34 @@ const CheckoutContextProvider = ({
   const { cart, currentAddress } = cartState;
   const totalItems = cart.length;
 
-  const addProductToCart = (product: Product) => {
-    dispatch(addNewProductAction(product));
+  const productsTotalAmount = cart
+    .map((prodByQtd) => prodByQtd.totalPrice)
+    .reduce((total, curr) => total + curr, 0);
+
+  const deliveryTotalAmount = 10.99;
+
+  const totalAmount = productsTotalAmount + deliveryTotalAmount;
+
+  const addProductToCart = (product: Product, quantity: number) => {
+    dispatch(addNewProductAction(product, quantity));
+  };
+
+  const removeProductFromCart = (productId: string) => {
+    dispatch(removeProductAction(productId));
+  };
+
+  const incrementCartProductQuantity = (
+    productId: string,
+    quantity: number
+  ) => {
+    dispatch(incrementProductQuantityAction(productId, quantity));
+  };
+
+  const decrementCartProductQuantity = (
+    productId: string,
+    quantity: number
+  ) => {
+    dispatch(decrementProductQuantityAction(productId, quantity));
   };
 
   return (
@@ -40,7 +78,13 @@ const CheckoutContextProvider = ({
         cart,
         currentAddress,
         totalItems,
+        productsTotalAmount,
+        deliveryTotalAmount,
+        totalAmount,
         addProductToCart,
+        removeProductFromCart,
+        incrementCartProductQuantity,
+        decrementCartProductQuantity,
       }}
     >
       {children}

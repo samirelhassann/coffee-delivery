@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 
 import {
   Container,
@@ -9,31 +9,65 @@ import {
 import QuantityControl from "../../../../components/QuantityControl/QuantityControl";
 import RemoveButton from "../../../../components/RemoveButton/RemoveButton";
 
+import { CheckoutContext } from "../../../../contexts/CheckoutContext";
+import { Product } from "../../../../domains/Product";
+
 interface CheckoutCardProductProps {
-  icon: string;
-  productTitle: string;
-  price: string;
+  product: Product;
+  price: number;
+  cartQuantity: number;
 }
 
 const CheckoutCardProduct = ({
-  icon,
-  productTitle,
+  product,
   price,
+  cartQuantity,
 }: CheckoutCardProductProps) => {
+  const {
+    incrementCartProductQuantity,
+    decrementCartProductQuantity,
+    removeProductFromCart,
+  } = useContext(CheckoutContext);
+  const [quantity, setQuantity] = useState(cartQuantity);
+
+  const handleRemoveProduct = () => {
+    removeProductFromCart(product.id);
+  };
+
+  const handleIncrement = () => {
+    incrementCartProductQuantity(product.id, 1);
+    setQuantity((state) => state + 1);
+  };
+
+  const handleDecrement = () => {
+    if (quantity >= 2) {
+      decrementCartProductQuantity(product.id, 1);
+      setQuantity((state) => state - 1);
+    }
+  };
+
+  const renderPrice = () => {
+    return `R$ ${price.toFixed(2)}`;
+  };
+
   return (
     <Container>
       <ProductDetails>
-        <img src={icon} width={64} />
+        <img src={product.image} width={64} />
         <InfoProduct>
-          <span>{productTitle}</span>
+          <span>{product.title}</span>
           <div>
-            <QuantityControl />
-            <RemoveButton />
+            <QuantityControl
+              quantity={quantity}
+              onIncrement={handleIncrement}
+              onDecrement={handleDecrement}
+            />
+            <RemoveButton onRemove={handleRemoveProduct} />
           </div>
         </InfoProduct>
       </ProductDetails>
 
-      <span className="price">{price}</span>
+      <span className="price">{renderPrice()}</span>
     </Container>
   );
 };
