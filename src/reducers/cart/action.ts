@@ -1,12 +1,17 @@
 import { Address } from "../../domains/Address";
 import { Product } from "../../domains/Product";
+import { CART_STATUS } from "./reducer";
 
 export enum ActionTypes {
+  UPDATE_CART_STATUS = "UPDATE_CART_STATUS",
+  CREATE_NEW_CART = "CREATE_NEW_CART",
+
   ADD_PRODUCT = "ADD_PRODUCT",
   REMOVE_PRODUCT = "REMOVE_PRODUCT",
   INCREMENT_PRODUCT_QUANTITY = "INCREMENT_PRODUCT_QUANTITY",
   DECREMENT_PRODUCT_QUANTITY = "DECREMENT_PRODUCT_QUANTITY",
   UPDATE_CURRENT_ADDRESS = "UPDATE_CURRENT_ADDRESS",
+  UPDATE_PAYMENT_METHOD = "UPDATE_PAYMENT_METHOD",
 }
 
 export function addNewProductAction(newProduct: Product, quantity: number) {
@@ -60,5 +65,29 @@ export function updateCurrentAddressAction(updatedAddress: Address) {
     payload: {
       updatedAddress,
     },
+  };
+}
+
+export function updatePaymentMethodAction(paymentMethod: string) {
+  return {
+    type: ActionTypes.UPDATE_PAYMENT_METHOD,
+    payload: {
+      paymentMethod,
+    },
+  };
+}
+
+export function updateCartStatusAction(status: CART_STATUS) {
+  return {
+    type: ActionTypes.UPDATE_CART_STATUS,
+    payload: {
+      status,
+    },
+  };
+}
+
+export function createNewCartAction() {
+  return {
+    type: ActionTypes.CREATE_NEW_CART,
   };
 }

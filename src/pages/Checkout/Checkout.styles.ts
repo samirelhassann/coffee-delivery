@@ -20,10 +20,16 @@ export const AddressAndPaymentContainer = styled.div`
   gap: 0.75rem;
 `;
 
-export const BackgroundContainer = styled.div`
+interface BackgroundContainerProps {
+  hasError?: boolean;
+}
+
+export const BackgroundContainer = styled.div<BackgroundContainerProps>`
   background-color: ${(props) => props.theme["base-card"]};
   padding: 2.5rem;
   border-radius: 6px;
+
+  border: ${(props) => props.hasError && "1px solid red"};
 `;
 
 export const CheckoutDetails = styled.div`
@@ -115,7 +121,7 @@ export const ConfirmButton = styled.button<ConfirmButtonProps>`
   background-color: ${(props) =>
     props.isDisabled ? props.theme["base-hover"] : props.theme.yellow};
   border-radius: 6px;
-  
+
   cursor: ${(props) => (props.isDisabled ? "not-allowed" : "pointer")};
 
   color: ${(props) => props.theme.white};

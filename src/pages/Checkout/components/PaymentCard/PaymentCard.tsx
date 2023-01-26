@@ -1,6 +1,7 @@
 import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
 
-import { SelectedCard, UnselectedCard } from "./PaymentCard.styles";
+import { CardSelection } from "./PaymentCard.styles";
 
 interface PaymentCardProps {
   icon: JSX.Element;
@@ -9,22 +10,20 @@ interface PaymentCardProps {
 }
 
 const PaymentCard = ({ icon, title, isActive = false }: PaymentCardProps) => {
+  const { control } = useFormContext();
+
   return (
-    <>
-      {isActive ? (
-        <SelectedCard>
+    <Controller
+      control={control}
+      name="paymentMethod"
+      render={({ field: { onChange } }) => (
+        <CardSelection isActive={isActive} onClick={() => onChange(title)}>
           {icon}
 
           <span>{title}</span>
-        </SelectedCard>
-      ) : (
-        <UnselectedCard>
-          {icon}
-
-          <span>{title}</span>
-        </UnselectedCard>
+        </CardSelection>
       )}
-    </>
+    />
   );
 };
 

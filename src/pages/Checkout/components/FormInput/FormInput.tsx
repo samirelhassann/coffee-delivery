@@ -30,7 +30,7 @@ const FormInput = ({
 }: Props) => {
   return (
     <Container sizeType={sizeType}>
-      {hasError && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      {/* {hasError && <ErrorMessage>{errorMessage}</ErrorMessage>} */}
 
       <Input
         type={type}

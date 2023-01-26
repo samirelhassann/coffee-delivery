@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
@@ -27,10 +28,11 @@ const newAddressValidationSchema = zod.object({
   zipCode: zod.string().min(8, "Obrigatório"),
   street: zod.string().min(1, "Obrigatório"),
   number: zod.string().min(1, "Obrigatório"),
-  complement: zod.string().min(1, "Obrigatório"),
+  complement: zod.string(),
   district: zod.string().min(1, "Obrigatório"),
   city: zod.string().min(1, "Obrigatório"),
   state: zod.string().min(2, "Obrigatório"),
+  paymentMethod: zod.string().min(1, "Obrigatório"),
 });
 
 export type NewAddressFormData = zod.infer<typeof newAddressValidationSchema>;
@@ -42,16 +44,32 @@ const Checkout = () => {
     productsTotalAmount,
     deliveryTotalAmount,
     totalAmount,
+    submitOrder,
   } = useContext(CheckoutContext);
 
   const newAddressForm = useForm<NewAddressFormData>({
     resolver: zodResolver(newAddressValidationSchema),
     defaultValues: {
       zipCode: "",
+      street: "",
+      number: "",
+      complement: "",
+      district: "",
+      city: "",
+      state: "",
+      paymentMethod: "",
     },
   });
 
-  const { handleSubmit, reset } = newAddressForm;
+  const navigate = useNavigate();
+
+  const {
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = newAddressForm;
+
+  const hasPaymentMethodError = !!errors.paymentMethod;
 
   const isButtonEnabled = totalItems > 0;
 
@@ -59,25 +77,27 @@ const Checkout = () => {
     return `R$ ${value.toFixed(2)}`;
   };
 
-  const handleCreateNewAddress = (data: NewAddressFormData) => {
-    // createNewCycle(data);
+  const handleSubmitCheckoutInfo = (data: NewAddressFormData) => {
+    submitOrder(data);
     reset();
+
+    navigate("/order-completed");
   };
 
   return (
-    <form action="" onSubmit={handleSubmit(handleCreateNewAddress)}>
+    <form action="" onSubmit={handleSubmit(handleSubmitCheckoutInfo)}>
       <Container>
         <AddressAndPaymentContainer>
           <header>Complete seu pedido</header>
-          <BackgroundContainer>
-            <FormProvider {...newAddressForm}>
+          <FormProvider {...newAddressForm}>
+            <BackgroundContainer>
               <AddressForm />
-            </FormProvider>
-          </BackgroundContainer>
+            </BackgroundContainer>
 
-          <BackgroundContainer>
-            <PaymentMethods />
-          </BackgroundContainer>
+            <BackgroundContainer hasError={hasPaymentMethodError}>
+              <PaymentMethods />
+            </BackgroundContainer>
+          </FormProvider>
         </AddressAndPaymentContainer>
 
         <CheckoutDetails>

@@ -9,6 +9,10 @@ export const Container = styled.div`
   border-radius: 6px;
   cursor: pointer;
 
+  /* input{
+    display: none;
+  } */
+
   span {
     color: ${(props) => props.theme["base-text"]};
     font-style: normal;
@@ -19,17 +23,20 @@ export const Container = styled.div`
   }
 `;
 
-export const UnselectedCard = styled(Container)`
-  background-color: ${(props) => props.theme["base-button"]};
+interface PaymentCardProps {
+  isActive: boolean;
+}
 
-  &:hover {
-    background-color: ${(props) => props.theme["base-hover"]};
-    transition: all ease 0.5s;
-  }
-`;
+export const CardSelection = styled(Container)<PaymentCardProps>`
+  background-color: ${(props) =>
+    props.isActive ? props.theme["purple-light"] : props.theme["base-button"]};
 
-export const SelectedCard = styled(Container)`
-  background-color: ${(props) => props.theme["purple-light"]};
-  border: 1px solid ${(props) => props.theme.purple};
+  border: ${(props) =>
+    props.isActive ? `1px solid ${props.theme.purple}` : "none"};
+
   cursor: default;
+
+  ${(props) =>
+    !props.isActive &&
+    ` &:hover { background-color: ${props.theme["base-hover"]}; transition: all ease 0.5s; }`}
 `;

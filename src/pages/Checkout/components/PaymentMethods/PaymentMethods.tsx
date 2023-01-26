@@ -1,4 +1,5 @@
 import React from "react";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { Bank, CreditCard, CurrencyDollar, Money } from "phosphor-react";
 
@@ -8,6 +9,13 @@ import PaymentCard from "../PaymentCard/PaymentCard";
 import SectionLabel from "../SectionLabel/SectionLabel";
 
 const PaymentMethods = () => {
+  const { control } = useFormContext();
+
+  const paymentMethod = useWatch({
+    control,
+    name: "paymentMethod",
+  });
+
   return (
     <Container>
       <SectionLabel
@@ -20,15 +28,17 @@ const PaymentMethods = () => {
         <PaymentCard
           icon={<CreditCard size={16} color="#8047F8" />}
           title="Cartão de Crédito"
-          isActive
+          isActive={paymentMethod === "Cartão de Crédito"}
         />
         <PaymentCard
           icon={<Bank size={16} color="#8047F8" />}
           title="Cartão de Débito"
+          isActive={paymentMethod === "Cartão de Débito"}
         />
         <PaymentCard
           icon={<Money size={16} color="#8047F8" />}
           title="Dinheiro"
+          isActive={paymentMethod === "Dinheiro"}
         />
       </PaymentList>
     </Container>

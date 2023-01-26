@@ -1,4 +1,5 @@
 import { produce } from "immer";
+import { v4 as uuidv4 } from "uuid";
 
 import { Address } from "../../domains/Address";
 import { Product } from "../../domains/Product";
@@ -10,9 +11,17 @@ export interface ProductByQuantity {
   totalPrice: number;
 }
 
-interface CartState {
+export enum CART_STATUS {
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED",
+}
+
+export interface CartState {
+  id: string | null;
   cart: ProductByQuantity[];
-  currentAddress: Address | null;
+  address: Address | null;
+  paymentMethod: string | null;
+  cartStatus?: CART_STATUS;
 }
 
 export function cartReducer(state: CartState, action: any) {
@@ -54,7 +63,7 @@ export function cartReducer(state: CartState, action: any) {
     updatedCart = updatedCart.filter(
       (product) => product.product.id !== action.payload.productId
     );
-    
+
     return produce(state, (draft) => {
       draft.cart = updatedCart;
     });
@@ -99,6 +108,28 @@ export function cartReducer(state: CartState, action: any) {
       draft.cart = updatedCart;
     });
   }
+  case ActionTypes.UPDATE_CURRENT_ADDRESS:
+    return produce(state, (draft) => {
+      draft.address = action.payload.updatedAddress;
+    });
+  case ActionTypes.UPDATE_PAYMENT_METHOD:
+    return produce(state, (draft) => {
+      draft.paymentMethod = action.payload.paymentMethod;
+    });
+  case ActionTypes.CREATE_NEW_CART:
+    return {
+      id: uuidv4(),
+      cart: [],
+      address: null,
+      paymentMethod: null,
+      cartStatus: CART_STATUS.IN_PROGRESS,
+    };
+
+  case ActionTypes.UPDATE_CART_STATUS:
+    return produce(state, (draft) => {
+      draft.cartStatus = action.payload.status;
+    });
+
   default:
     return state;
   }

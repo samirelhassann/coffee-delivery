@@ -25,11 +25,11 @@ const QuantityControl = ({
 
   return (
     <Container>
-      <button>
+      <button type="button">
         <Minus size={14} color="#8047F8" onClick={handleDecrement} />
       </button>
       <span>{quantity}</span>
-      <button>
+      <button type="button">
         <Plus size={14} color="#8047F8" onClick={handleIncrement} />
       </button>
     </Container>

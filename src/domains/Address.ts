@@ -1,7 +1,7 @@
 export interface Address {
-  zipCode: number;
+  zipCode: string;
   street: string;
-  number: number;
+  number: string;
   complement?: string;
   district: string;
   city: string;
