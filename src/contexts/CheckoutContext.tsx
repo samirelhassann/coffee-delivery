@@ -31,7 +31,7 @@ import {
 const LOCAL_STORAGE_CYCLES_NAME = "@coffee-delivery:cart-state-1.0.0";
 
 interface CheckoutContextType {
-  history: CartState[];
+  history: CartState[] | null;
   completedOrder: CartState | null;
 
   cart: ProductByQuantity[];
@@ -103,6 +103,8 @@ const CheckoutContextProvider = ({
       const historyOrders: CartState[] = JSON.parse(storedStateAsJSON);
 
       setHistory(historyOrders);
+    } else {
+      localStorage.setItem(LOCAL_STORAGE_CYCLES_NAME, JSON.stringify([]));
     }
   }, []);
 
@@ -127,8 +129,6 @@ const CheckoutContextProvider = ({
 
       if (cartState.cartStatus === CART_STATUS.COMPLETED)
         dispatch(createNewCartAction());
-    } else {
-      localStorage.setItem(LOCAL_STORAGE_CYCLES_NAME, JSON.stringify([]));
     }
   }, [cartState]);
 
