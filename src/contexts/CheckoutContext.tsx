@@ -127,6 +127,8 @@ const CheckoutContextProvider = ({
 
       if (cartState.cartStatus === CART_STATUS.COMPLETED)
         dispatch(createNewCartAction());
+    } else {
+      localStorage.setItem(LOCAL_STORAGE_CYCLES_NAME, JSON.stringify([]));
     }
   }, [cartState]);
 
