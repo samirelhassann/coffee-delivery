@@ -20,8 +20,6 @@ This project was built with the help of the [Rocketseat](https://www.rocketseat.
 - zod
 - immer
 - react-toastify
-- uuid
-- localStorage
 
 
 ## Demo
