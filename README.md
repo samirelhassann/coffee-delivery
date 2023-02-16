@@ -28,6 +28,10 @@ This project was built with the help of the [Rocketseat](https://www.rocketseat.
 
 ![demo](https://user-images.githubusercontent.com/91634008/215579750-17f4e7ca-2004-4563-8134-4f1fc6bcd08d.gif)
 
+## Live Preview
+
+Check live preview: https://coffee-delivery-ffe20.web.app/
+
 ## Instalation
 
 ```bash
